@@ -3,11 +3,7 @@ const React = require('react');
 const {useState, useEffect} = require('react');
 const {Box, TextInput, Text, render} = require('ink');
 
-// const App = ({name = 'Stranger'}) => (
-// 	<Text>
-// 		Hello, <Text color="green">{name}</Text>
-// 	</Text>
-// );
+// static challenges
 const Typing = (()=>{
 	let phrases = [
 	  'The Moon is a barren, rocky world without air and water. It has dark lava plain on its surface. The Moon is filled wit craters. It has no light of its own. It gets its light from the Sun. The Moo keeps changing its shape as it moves round the Earth. It spins on its axis in 27.3 days stars were named after the Edwin Aldrin were the first ones to set their foot on the Moon on 21 July 1969 They reached the Moon in their space craft named Apollo II.',
@@ -23,35 +19,54 @@ const Typing = (()=>{
 		phrase: '',
 		input: ''
 	})
+
+    //select a random phrase from the array of phrases and set state.phrase while spreading in everything else
 	const randomPhrase=()=>{
 		setState({...state, phrase: phrases[Math.floor(Math.random()*phrases.length())]})
 	  }
+
+    //when component mounts call random phrase function and return message
 	useEffect(()=>{
 	  randomPhrase(); 
 	  return 'Welcome to Typing Masters!'}, [])
-	// const [input, setInput] = useState('');
+
+    //calculate words typed by deviding the number of characters in the input by 5
 	const words = state.input.length()/5;
+
+    //calculate the total words in a phrase by deviding by 5
 	const total = state.phrase.length()/5;
+
+    //used to keep track of correct and incorrect characters in the input
 	const correct = 0;
 	const incorrect = 0;
-	for (var i=0; i<total; i++){
+
+    //iterate through the phrase to find the index of each character
+	for (var i=0; i<state.phrase.length(); i++){
+        //if input character is equal to the character in the phrase as the same index at 1 to 'correct' count
 		if (state.input[i]===state.phrase[i]){
 		  correct+=1
 		}
-		else{
+		else{//add one to 'incorrect' count
 		  incorrect+=1
 		}
 	  
 	}
 	
-	const wpm=(words-incorrect);
+    //calculate words per min by dividing the amount of words by the time taken to complete test
+    //need to find a way to track time
+	const wpm=(words);
+
+    //calculate accuracy by taking the amount of correct characters and dividing it by 5. 
+    //then divide previous answer by total
+    //last multiply it by 100
 	const accuracy=((correct/5)/total)*100;
 	
-  
+    //set state.input to the changes made in the text input
 	const handleChange = (event) => {
 	  setState({...state, input: event.target.value});
 	};
   
+    //when submitted return original phrase, typed input, amount of words typed, amount of correct and incorrect words, wpm and accuracy
 	const handleSubmit = () =>{
 	  return(
 		`phrase: ${state.phrase}, input: ${state.input}, wordsTyped: ${words}, correctWords: ${correct/5}, incorrectWords: ${incorrect/5}, wpm: ${wpm}, accuracy: ${accuracy}`
