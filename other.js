@@ -3,7 +3,7 @@ const React = require('react');
 const {useState, useEffect} = require('react');
 const {Box, TextInput, Text, render} = require('ink');
 
-// static challenges
+// static typing challenges
 const Typing = (()=>{
 	let phrases = [
 	  'The Moon is a barren, rocky world without air and water. It has dark lava plain on its surface. The Moon is filled wit craters. It has no light of its own. It gets its light from the Sun. The Moo keeps changing its shape as it moves round the Earth. It spins on its axis in 27.3 days stars were named after the Edwin Aldrin were the first ones to set their foot on the Moon on 21 July 1969 They reached the Moon in their space craft named Apollo II.',
@@ -53,7 +53,7 @@ const Typing = (()=>{
 	}
 	
     //calculate words per min by dividing the amount of words by the time taken to complete test
-    //need to find a way to track time
+    //Still need to find a way to track time
 	const wpm=(words);
 
     //calculate accuracy by taking the amount of correct characters and dividing it by 5. 
@@ -63,14 +63,15 @@ const Typing = (()=>{
 	
     //set state.input to the changes made in the text input
 	const handleChange = (event) => {
-	  setState({...state, input: event.target.value});
+	    setState({...state, input: event.target.value});
 	};
   
     //when submitted return original phrase, typed input, amount of words typed, amount of correct and incorrect words, wpm and accuracy
-	const handleSubmit = () =>{
-	  return(
-		`phrase: ${state.phrase}, input: ${state.input}, wordsTyped: ${words}, correctWords: ${correct/5}, incorrectWords: ${incorrect/5}, wpm: ${wpm}, accuracy: ${accuracy}`
-	  )
+	const handleSubmit = (event) =>{
+        event.preventDefault();
+	    return(
+            `phrase: ${state.phrase}, input: ${state.input}, wordsTyped: ${words}, correctWords: ${correct/5}, incorrectWords: ${incorrect/5}, wpm: ${wpm}, accuracy: ${accuracy}`
+        )
 	}
 	return (
         <Box>
@@ -81,6 +82,5 @@ const Typing = (()=>{
     )
   })
 
-render(<Typing/>)
 
 module.exports = Typing;
